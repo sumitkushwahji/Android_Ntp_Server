@@ -27,41 +27,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.txtview);
+        if (!CheckInternetConnection.getConnectivityStatusString(MainActivity.this).toString().equalsIgnoreCase("internet is not available")) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    Date date = null;
+                    data = getUTCTime();
+                    String com = getUTCTime();
 
-
-        button = (Button) findViewById(R.id.ani);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!CheckInternetConnection.getConnectivityStatusString(MainActivity.this).toString().equalsIgnoreCase("internet is not available")) {
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            Date date = null;
-                            data = getUTCTime();
-                            String com = getUTCTime();
-
-                            textView.setText(data);
-
-                        }
-                    };
-                    thread.start();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                        }
-                    }, 10);
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Internet is not connected", Toast.LENGTH_SHORT).show();
+                    textView.setText(data);
 
                 }
+            };
+            thread.start();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    data = getUTCTime();
+                }
+            }, 10);
+
+        } else {
+            Toast.makeText(MainActivity.this, "Internet is not connected", Toast.LENGTH_SHORT).show();
+
+        }
 
 
-            }
-        });
     }
             public String getUTCTime() {
                 long nowAsPerDeviceTimeZone = 0;
@@ -74,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     int differentialOfTimeZones = timeZoneInDevice.getOffset(System.currentTimeMillis());
                     nowAsPerDeviceTimeZone -= differentialOfTimeZones;
                 }
-                DateFormat dateFormat=new SimpleDateFormat();
+                DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy' 'HH:mm:ss");
                 dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
                 return dateFormat.format(new Date(nowAsPerDeviceTimeZone));
 
