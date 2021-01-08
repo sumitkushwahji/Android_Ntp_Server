@@ -2,12 +2,14 @@ package com.example.ntp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Handler;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,17 +29,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.txtview);
+
         if (!CheckInternetConnection.getConnectivityStatusString(MainActivity.this).toString().equalsIgnoreCase("internet is not available")) {
             Thread thread = new Thread() {
                 @Override
+
                 public void run() {
-                    super.run();
-                    Date date = null;
-                    data = getUTCTime();
-                    String com = getUTCTime();
+                    while(true) {
+                        super.run();
+                        Date date = null;
+                        data = getUTCTime();
+                        /* String com = getUTCTime(); */
 
-                    textView.setText(data);
-
+                        textView.setText(data);
+                    }
                 }
             };
             thread.start();
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     data = getUTCTime();
                 }
             }, 10);
+
 
         } else {
             Toast.makeText(MainActivity.this, "Internet is not connected", Toast.LENGTH_SHORT).show();

@@ -4,12 +4,30 @@
     android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/csir_logo">
 
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/text_ist"
+        android:paddingRight="40dp"
+        android:paddingLeft="40dp"
+        android:hint="Indian Standard Time (IST)
+                      (IST : Maintained by CSIR-NPL, India)"
+
+        android:gravity="center"
+        android:textSize="20dp"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/txtview"
-        android:hint="time "
+        android:hint="Getting time from NTP server "
         android:gravity="center"
         android:textSize="20dp"
         />
